@@ -1,0 +1,9 @@
+STU/Model/*Table.hh
+STU/Model/*TableInterface.hh
+vendor
+composer.lock
+dev
+node_modules
+assets/js/cmp/**/*.js
+config/flyway.properties
+STU/Database/Configuration.hh

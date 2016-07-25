@@ -1,0 +1,10 @@
+namespace=STU\Model
+class=UserTable
+table=stu_user
+key=id
+
+attribute=email:text
+attribute=state:int
+attribute=faction_id:int
+attribute=password:text
+attribute=name:text

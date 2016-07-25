@@ -1,0 +1,8 @@
+namespace=STU\Model
+class=MapTable
+table=stu_map
+key=id
+
+attribute=cx:int
+attribute=cy:int
+attribute=type_id:int

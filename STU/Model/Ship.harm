@@ -1,0 +1,13 @@
+namespace=STU\Model
+class=ShipTable
+table=stu_ship
+key=id
+
+attribute=name:text
+attribute=energy:int
+attribute=hull:int
+attribute=shields:text
+attribute=user_id:int
+attribute=shield_active:int
+attribute=cx:int
+attribute=cy:int

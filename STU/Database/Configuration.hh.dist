@@ -1,0 +1,25 @@
+<?hh // strict
+namespace STU\Database;
+
+class Configuration implements \Usox\HaDb\DatabaseConfigInterface {
+
+	public function getHost(): string {
+		return '';
+	}
+
+	public function getPort(): int {
+		return 5432;
+	}
+
+	public function getName(): string {
+		return '';
+	}
+
+	public function getUser(): string {
+		return '';
+	}
+
+	public function getPassword(): string {
+		return '';
+	}
+}

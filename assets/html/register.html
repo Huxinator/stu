@@ -1,0 +1,37 @@
+<form id="register_form">
+	<div class="alert alert-success" id="register_alert"></div>
+	<div class="row">
+		<div class="col-md-2">
+			<div class="input-group input-group-sm">
+				<span class="input-group-addon">@</span>
+				<input type="text" class="form-control" placeholder="eMail-Adresse" id="register_email">
+			</div>	
+		</div>
+		<div class="col-md-3">
+			<span id="register_email_check"></span>
+			<span id="register_email_check_message"></span>
+		</div>
+	</div>
+	<br />
+	Fraktion wählen
+	<div class="row">
+		<div class="col-md-2">
+			<div id="factionlist">
+
+			</div>
+		</div>
+	</div>
+	<br />
+	<div class="row">
+		<div class="col-md-2">
+			<button type="button" class="btn btn-default btn-sm" id="register_button">Registrieren</button>
+		</div>
+	</div>
+</form>
+<script type="text/html" id="factioninfo">
+	<div>
+		<input type="radio" data-value="id" name="register_faction_id" />
+		<span data-content="name"></span>
+	</div>
+</script>
+<script src="assets/js/register.js"></script>

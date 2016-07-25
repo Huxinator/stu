@@ -1,0 +1,22 @@
+{
+    "name": "usox/stu75",
+    "description": "Some Trek Universe 75",
+    "version": "0.1",
+    "require": {
+	    "usox/harm": "0.1.*",
+	    "lx/jsonrpcxp": "0.1a",
+	    "monolog/monolog": "1.11.*",
+	    "zendframework/zend-mail": "2.3.*",
+	    "zendframework/zend-validator": "2.3.*",
+	    "pimple/pimple": "3.*"
+    },
+    "require-dev": {
+	    "phpunit/phpunit": "5.*",
+	    "mockery/mockery": "0.*"
+    },
+    "autoload": {
+	"psr-4": {
+		"STU\\": "./STU"
+	}
+    }
+}

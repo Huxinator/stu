@@ -1,14 +1,13 @@
-<?hh
+<?hh // strict
 namespace STU\Core\RPC;
 
-use \STU\Core\Type;
-use \STU\Model\ShipTable;
-use \STU\Model\UserTable;
+use STU\Core\Type;
+use STU\Model\ShipTable;
+use STU\Model\UserTable;
 
 class Ship extends Base {
 
 	const int ERROR_SHIELD_NOT_LOADED = 1;
-
 	const int ERROR_NOT_ENOUGH_POWER = 2;
 
 	public function __construct(\STU\DI\DIContainer $di, private \STU\Core\Ship\ComponentFactoryInterface $component_factory) {
@@ -72,6 +71,9 @@ class Ship extends Base {
 
 		return array_map(function ($item) {
 				return array_map(function ($field) {
+					if ($field === null) {
+						return null;
+					}
 					return new Type\MapField($field);
 				},
 				$item);

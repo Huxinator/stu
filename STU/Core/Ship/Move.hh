@@ -1,4 +1,4 @@
-<?hh
+<?hh // strict
 namespace STU\Core\Ship;
 
 use STU\Model\ShipTableInterface;

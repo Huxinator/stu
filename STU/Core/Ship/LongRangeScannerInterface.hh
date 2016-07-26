@@ -1,5 +1,4 @@
-<?hh //strict
-
+<?hh // strict
 namespace STU\Core\Ship;
 
 interface LongRangeScannerInterface {

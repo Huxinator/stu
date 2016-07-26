@@ -4,8 +4,8 @@ use Monolog\Logger;
 
 $di_container = new \STU\DI\DIContainer();
 
-$di_container['database'] = function($c): Usox\SimpleAR\Database\DatabaseInterface {
-	return new Usox\SimpleAR\Database\Database(new STU\Database\Configuration());
+$di_container['database'] = function($c): Usox\HaDb\DatabaseInterface {
+	return new Usox\HaDb\DatabasePostgres(new STU\Database\Configuration());
 };
 $di_container['session_storage'] = function($c): STU\Session\Storage {
 	return new STU\Session\Storage();

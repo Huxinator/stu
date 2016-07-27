@@ -3,7 +3,7 @@
     "description": "Some Trek Universe 75",
     "version": "0.1",
     "require": {
-	    "usox/harm": "0.1.*",
+	    "usox/harm": "0.2.*",
 	    "lx/jsonrpcxp": "0.1a",
 	    "monolog/monolog": "1.11.*",
 	    "zendframework/zend-mail": "2.3.*",

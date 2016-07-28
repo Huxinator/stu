@@ -65,7 +65,7 @@ div.header {
 .title {
 	background-color: #262323;
 }
-#de_activate_shield {
+.shield_active {
 	color: #00bbcf;
 }
 .link {

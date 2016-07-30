@@ -23,8 +23,17 @@ define(
 						json.request('ship.getMap', [ship.id], (result) ->
 							$.get('assets/html/map/field.html', (tpl) ->
 								template = Handlebars.compile(tpl);
+								firstrow = true
 								fields = ''
 								for cy, row_x of result.result
+									if (firstrow == true)
+										fields += '<div class="map_table_y"></div>'
+										for cx, map_field of row_x
+											fields += '<div class="map_table_x">'+cx+'</div>'
+										fields += '<br />'
+										firstrow = false
+
+									fields += '<div class="map_table_y">'+cy+'</div>'
 									for cx, map_field of row_x
 										if !map_field
 											map_field = { id: 0, type_id: 0, cx: cx, cy: cy}

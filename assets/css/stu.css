@@ -71,3 +71,12 @@ div.header {
 .link {
 	cursor: pointer;
 }
+.map_table_y {
+	display: inline-block;
+	width: 20px;
+}
+.map_table_x {
+	display: inline-block;
+	width: 30px;
+	text-align: center
+}

@@ -20,7 +20,8 @@ class Ship implements \JsonSerializable {
 			'sector' => sprintf('%d/%d', $this->ship->getCx(), $this->ship->getCy()),
 			'energy' => $this->ship->getEnergy(),
 			'shield' => $this->ship->getShields(),
-			'shield_active' => $this->ship->getShieldActive()
+			'shield_active' => $this->ship->getShieldActive(),
+			'lrs_active' => $this->ship->getLrsActive()
 		];
 	}
 }

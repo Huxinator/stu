@@ -9,5 +9,6 @@ attribute=hull:int
 attribute=shields:text
 attribute=user_id:int
 attribute=shield_active:int
+attribute=lrs_active:int
 attribute=cx:int
 attribute=cy:int

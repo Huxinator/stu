@@ -2,7 +2,7 @@
 namespace STU\Core\RPC;
 
 use STU\Core\Type;
-use STU\Model\ShipTable;
+use STU\Model\ShipTableInterface;
 use STU\Model\UserTable;
 
 class Ship extends Base {
@@ -14,7 +14,7 @@ class Ship extends Base {
 		parent::__construct($di);
 	}
 
-	private function getShip(int $ship_id): ShipTable {
+	private function getShip(int $ship_id): ShipTableInterface {
 		$ship = $this->getDIContainer()->ship->findObject('id='.$ship_id);
 
 		$user = $this->getSessionManager()->getCurrentUser();
@@ -87,5 +87,22 @@ class Ship extends Base {
 		$map_field = $this->getDIContainer()->map->getById($field_id);
 
 		return $move->toField($map_field);
+	}
+
+	public function toggleLongRangeScanner(int $ship_id): Type\Ship {
+		$ship = $this->getShip($ship_id);
+		if ($ship->getLrsActive() == 0) {
+			if ($ship->getEnergy() < 1) {
+				$this->fault('Es wird 1 Energie benötigt', self::ERROR_NOT_ENOUGH_POWER);
+			}
+			$ship->setEnergy($ship->getEnergy() - 1);
+			$ship->setLrsActive(1);
+		} else {
+			$ship->setLrsActive(0);
+		}
+		
+		$ship->save();
+		
+		return new Type\Ship($ship);
 	}
 }

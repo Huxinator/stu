@@ -5,10 +5,11 @@ use STU\Core\Type;
 use STU\Model\ShipTableInterface;
 use STU\Model\UserTable;
 
-class Ship extends Base {
+final class Ship extends Base {
 
 	const int ERROR_SHIELD_NOT_LOADED = 1;
 	const int ERROR_NOT_ENOUGH_POWER = 2;
+	const int ERROR_NOT_ALLOWED = 3;
 
 	public function __construct(\STU\DI\DIContainer $di, private \STU\Core\Ship\ComponentFactoryInterface $component_factory) {
 		parent::__construct($di);
@@ -62,6 +63,9 @@ class Ship extends Base {
 
 	public function getMap(int $ship_id): array<array<Type\MapField>> {
 		$ship = $this->getShip($ship_id);
+		if ($ship->getLrsActive() == 0) {
+			$this->fault('Die Langstreckensensoren sind nicht aktiviert', static::ERROR_NOT_ALLOWED);
+		}
 
 		$fields = $this->getDIContainer()->map_component_factory->createFieldsAroundPoint(
 			$ship->getCx(),

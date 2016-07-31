@@ -23,7 +23,8 @@ final class ShortRangeScanner implements ShortRangeScannerInterface {
 	public function getShipList(): Vector<ShipTableInterface> {
 		return $this->ship->getObjectsBy(
 			sprintf(
-				'map_instance_id = %d and cx = %d and cy = %d',
+				'id != %s and map_instance_id = %d and cx = %d and cy = %d',
+				$this->ship->getId(),
 				$this->ship->getMapInstanceId(),
 				$this->ship->getCx(),
 				$this->ship->getCy()

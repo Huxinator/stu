@@ -21,7 +21,8 @@ final class Ship implements \JsonSerializable {
 			'energy' => $this->ship->getEnergy(),
 			'shield' => $this->ship->getShields(),
 			'shield_active' => $this->ship->getShieldActive(),
-			'lrs_active' => $this->ship->getLrsActive()
+			'lrs_active' => $this->ship->getLrsActive(),
+			'srs_active' => $this->ship->getSrsActive()
 		];
 	}
 }

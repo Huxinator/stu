@@ -139,7 +139,7 @@ final class Ship extends Base {
 		return new Type\Ship($ship);
 	}
 
-	public function getShiplistByShipPosition(int $ship_id): Vector<Type\ForeignShip> {
+	public function getShipListByShipPosition(int $ship_id): Vector<Type\ForeignShip> {
 		$ship = $this->getShip($ship_id);
 		if ($ship->getSrsActive() === 0) {
 			$this->fault('Kurzstreckensensoren nicht aktiviert', static::ERROR_SYSTEM_NOT_ACTIVATED);

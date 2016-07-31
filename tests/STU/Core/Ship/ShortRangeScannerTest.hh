@@ -20,13 +20,15 @@ class ShortRangeScannerTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testGetShipListReturnsVector() {
+		$id = 1414;
 		$cx = 666;
 		$cy = 42;
 		$map_instance_id = 123;
 		$result = Vector{};
 
-		$query = sprintf('map_instance_id = %d and cx = %d and cy = %d', $map_instance_id, $cx, $cy);
+		$query = sprintf('id != %d and map_instance_id = %d and cx = %d and cy = %d', $id, $map_instance_id, $cx, $cy);
 
+		$this->ship->shouldReceive('getId')->once()->andReturn($id);
 		$this->ship->shouldReceive('getCx')->once()->andReturn($cx);
 		$this->ship->shouldReceive('getCy')->once()->andReturn($cy);
 		$this->ship->shouldReceive('getMapInstanceId')->once()->andReturn($map_instance_id);

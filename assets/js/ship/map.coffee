@@ -27,33 +27,38 @@ define(
 								fields = ''
 								for cy, row_x of result.result
 									if (firstrow == true)
-										fields += '<div class="map_table_y"></div>'
+										fields += '<div><div class="map_table_y"></div>'
 										for cx, map_field of row_x
 											fields += '<div class="map_table_x">'+cx+'</div>'
-										fields += '<br />'
+										fields += '</div>'
 										firstrow = false
 
-									fields += '<div class="map_table_y">'+cy+'</div>'
+									fields += '<div style="height: 34px"><div class="map_table_y">'+cy+'</div>'
 									for cx, map_field of row_x
 										if !map_field
 											map_field = { id: 0, type_id: 0, cx: cx, cy: cy}
-										map_field.border = 0
 										if map_field.cx == ship.get('cx') and map_field.cy == ship.get('cy')
-											map_field.border = 1
+											map_field.class = 'srs_mapfield_active'
+										if map_field.item_count == 0
+											map_field.item_count = ''
+
 										fields += template(map_field)
-									fields += '<br />'
+									fields += '</div>'
 
 								$('#mapfields').html(fields)
-								$('#mapfields').children('img').each (index, element) ->
-									$(element).bind 'click', ->
-										Ship.move(ship, $(element).data('id'))
+								$('#mapfields').find('.srs_mapfield').each (index, element) ->
+									element = $(element)
+									if element.data('cx') == ship.get('cx') || element.data('cy') == ship.get('cy')
+										element.addClass('link')
+										$(element).bind 'click', ->
+											Ship.move(ship, $(element).data('id'))
 							, 'html')
 						)
 				})
 
 
 
-		});
+		})
 
-		return ShipMapView;
+		return ShipMapView
 );

@@ -75,12 +75,31 @@ final class Ship extends Base {
 			$this->component_factory->createLongRangeScanner($ship)
 		);
 
-		return array_map(function ($item) {
-				return array_map(function ($field) {
+		return array_map(function ($item) use ($ship) {
+				return array_map(function ($field) use ($ship) {
 					if ($field === null) {
 						return null;
 					}
-					return new Type\MapField($field);
+					/**
+					 * @todo For now its ok to retrieve
+					 * the item count on a per-field
+					 * basis. But having a n*n amount of
+					 * queries is no solution for the
+					 * future
+					 */
+					$mapfield = new Type\MapField($field);
+					$mapfield->setItemCount(
+						$ship->count(
+							sprintf(
+								'id != %d and map_instance_id = %d and cx = %d AND cy = %d',
+								$ship->getId(),
+								$ship->getMapInstanceId(),
+								$field->getCx(),
+								$field->getCy()
+							)
+						)
+					);
+					return $mapfield;
 				},
 				$item);
 			},

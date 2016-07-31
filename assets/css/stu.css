@@ -77,6 +77,18 @@ div.header {
 }
 .map_table_x {
 	display: inline-block;
-	width: 30px;
+	width: 32px;
 	text-align: center
+}
+div.srs_mapfield {
+	outline: 1px solid #313131;
+	vertical-align: middle;
+	text-align: center;
+	padding-top: 6px;
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+}
+div.srs_mapfield_active {
+	outline-color: #ffffff;
 }

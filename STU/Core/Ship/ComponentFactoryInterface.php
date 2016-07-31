@@ -7,5 +7,7 @@ interface ComponentFactoryInterface {
 
 	public function createLongRangeScanner(ShipTableInterface $ship): LongRangeScannerInterface;
 
+	public function createShortRangeScanner(ShipTableInterface $ship): ShortRangeScannerInterface;
+
 	public function createMove(ShipTableInterface $ship): MoveInterface;
 }

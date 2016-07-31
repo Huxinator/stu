@@ -3,10 +3,14 @@ namespace STU\Core\Ship;
 
 use STU\Model\ShipTableInterface;
 
-class ComponentFactory implements ComponentFactoryInterface {
+final class ComponentFactory implements ComponentFactoryInterface {
 	
 	public function createLongRangeScanner(ShipTableInterface $ship): LongRangeScannerInterface {
 		return new LongRangeScanner($ship);
+	}
+
+	public function createShortRangeScanner(ShipTableInterface $ship): ShortRangeScannerInterface {
+		return new ShortRangeScanner($ship);
 	}
 
 	public function createMove(ShipTableInterface $ship): MoveInterface {

@@ -110,4 +110,21 @@ final class Ship extends Base {
 		
 		return new Type\Ship($ship);
 	}
+
+	public function toggleShortRangeScanner(int $ship_id): Type\Ship {
+		$ship = $this->getShip($ship_id);
+		if ($ship->getSrsActive() == 0) {
+			if ($ship->getEnergy() < 1) {
+				$this->fault('Es wird 1 Energie benötigt', self::ERROR_NOT_ENOUGH_POWER);
+			}
+			$ship->setEnergy($ship->getEnergy() - 1);
+			$ship->setSrsActive(1);
+		} else {
+			$ship->setSrsActive(0);
+		}
+		
+		$ship->save();
+		
+		return new Type\Ship($ship);
+	}
 }

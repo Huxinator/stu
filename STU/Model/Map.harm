@@ -6,3 +6,4 @@ key=id
 attribute=cx:int
 attribute=cy:int
 attribute=type_id:int
+attribute=instance_id:int

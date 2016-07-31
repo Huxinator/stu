@@ -23,6 +23,7 @@ class ShipTest extends \PHPUnit_Framework_TestCase {
 		$energy = 111;
 		$shield_points = 222;
 		$shield_active = 1;
+		$lrs_active = 1;
 
 		$this->ship->shouldReceive('getId')->once()->andReturn($id);
 		$this->ship->shouldReceive('getName')->once()->andReturn($name);
@@ -32,6 +33,7 @@ class ShipTest extends \PHPUnit_Framework_TestCase {
 		$this->ship->shouldReceive('getEnergy')->once()->andReturn($energy);
 		$this->ship->shouldReceive('getShields')->once()->andReturn($shield_points);
 		$this->ship->shouldReceive('getShieldActive')->once()->andReturn($shield_active);
+		$this->ship->shouldReceive('getLrsActive')->once()->andReturn($lrs_active);
 		
 		$this->assertSame(
 			[
@@ -44,7 +46,8 @@ class ShipTest extends \PHPUnit_Framework_TestCase {
 				'sector' => $sector,
 				'energy' => $energy,
 				'shield' => $shield_points,
-				'shield_active' => $shield_active
+				'shield_active' => $shield_active,
+				'lrs_active' => $lrs_active
 			],
 			$this->type->jsonSerialize()
 		);

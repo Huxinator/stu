@@ -22,6 +22,9 @@ dbmigration:force
 dbinfo:force
 	flyway -configFile=config/flyway.properties -locations=filesystem:dist/sql/ info
 
+dbrepair:force
+	flyway -configFile=config/flyway.properties -locations=filesystem:dist/sql/ repair
+
 init:composer model nodeinstall
 
 update:model compile

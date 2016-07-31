@@ -10,6 +10,9 @@ class Move implements MoveInterface {
 	public function __construct(private ShipTableInterface $ship): void {
 	}
 
+	/**
+	 * @todo add a real error handling...
+	 */
 	public function toField(MapTableInterface $map_field): MoveResult {
 		$result = new MoveResult($this->ship);
 		if ($map_field->getCx() === $this->ship->getCx() &&
@@ -19,6 +22,9 @@ class Move implements MoveInterface {
 		if ($map_field->getCx() !== $this->ship->getCx() &&
 			$map_field->getCy() !== $this->ship->getCy()) {
 			throw new \Exception('2');
+		}
+		if ($map_field->getInstanceId() !== $this->ship->getMapInstanceId()) {
+			throw new \Exception('3');
 		}
 		$fields = $this->getMapFieldList($map_field);
 		foreach ($fields as $field) {
@@ -31,12 +37,14 @@ class Move implements MoveInterface {
 	}
 
 	private function getMapFieldList(MapTableInterface $map_field): Vector<MapTableInterface> {
+		$query = sprintf('instance_id = %d AND ', $map_field->getInstanceId());
+
 		if ($map_field->getCx() == $this->ship->getCx()) {
 			$query_parts = $this->calculateQueryParts(
 				$this->ship->getCy(),
 				$map_field->getCy()
 			);
-			$query = sprintf(
+			$query .= sprintf(
 				'cx = %d AND cy BETWEEN %d AND %d',
 				$map_field->getCx(),
 				$query_parts['start'],
@@ -48,7 +56,7 @@ class Move implements MoveInterface {
 				$this->ship->getCx(),
 				$map_field->getCx()
 			);
-			$query = sprintf(
+			$query .= sprintf(
 				'cy = %d AND cx BETWEEN %d AND %d',
 				$map_field->getCy(),
 				$query_parts['start'],

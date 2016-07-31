@@ -68,6 +68,7 @@ final class Ship extends Base {
 		}
 
 		$fields = $this->getDIContainer()->map_component_factory->createFieldsAroundPoint(
+			$ship->getMapInstanceId(),
 			$ship->getCx(),
 			$ship->getCy(),
 			$this->component_factory->createLongRangeScanner($ship)

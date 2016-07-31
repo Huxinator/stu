@@ -12,3 +12,4 @@ attribute=shield_active:int
 attribute=lrs_active:int
 attribute=cx:int
 attribute=cy:int
+attribute=map_instance_id:int

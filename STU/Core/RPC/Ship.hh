@@ -167,8 +167,12 @@ final class Ship extends Base {
 
 		$result = Vector{};
 		foreach ($scanner->getShipList() as $foreign_ship) {
+			$user = $this->getDIContainer()->user;
 			$result->add(
-				new Type\ForeignShip($foreign_ship)
+				new Type\ForeignShip(
+					$foreign_ship,
+					new Type\ForeignUser($user->getById($foreign_ship->getUserId()))
+				)
 			);
 		}
 		return $result;

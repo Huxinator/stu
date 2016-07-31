@@ -92,3 +92,6 @@ div.srs_mapfield {
 div.srs_mapfield_active {
 	outline-color: #ffffff;
 }
+#srs_table_header {
+	font-weight: bold;
+}

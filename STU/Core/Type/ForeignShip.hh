@@ -14,7 +14,10 @@ use STU\Model\ShipTableInterface;
  */
 final class ForeignShip implements \JsonSerializable {
 
-	public function __construct(private ShipTableInterface $ship): void {
+	public function __construct(
+		private ShipTableInterface $ship,
+		private ForeignUserInterface $user
+	): void {
 	}
 	
 	/**
@@ -28,6 +31,7 @@ final class ForeignShip implements \JsonSerializable {
 			'cx' => $this->ship->getCx(),
 			'cy' => $this->ship->getCy(),
 			'shield_active' => $this->ship->getShieldActive(),
+			'user' => $this->user
 		];
 	}
 }

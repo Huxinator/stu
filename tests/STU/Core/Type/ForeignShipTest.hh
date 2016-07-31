@@ -8,8 +8,9 @@ class ForeignShipTest extends \PHPUnit_Framework_TestCase {
 
 	public function setUp() {
 		$this->ship = m::mock(ShipTableInterface::class);
+		$this->user = m::mock(ForeignUserInterface::class);
 
-		$this->type = new ForeignShip($this->ship);
+		$this->type = new ForeignShip($this->ship, $this->user);
 	}
 
 	public function testJsonSerializeReturnsCorrectDict() {
@@ -33,7 +34,8 @@ class ForeignShipTest extends \PHPUnit_Framework_TestCase {
 				'type_id' => $type_id,
 				'cx' => $cx,
 				'cy' => $cy,
-				'shield_active' => $shield_active
+				'shield_active' => $shield_active,
+				'user' => $this->user
 			],
 			$this->type->jsonSerialize()
 		);

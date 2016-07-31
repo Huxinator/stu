@@ -1,7 +1,7 @@
 <?hh // strict
 namespace STU\Core\Ship;
 
-final class LongRangeScanner implements LongRangeScannerInterface, ShipSystemInterface {
+final class LongRangeScanner implements LongRangeScannerInterface {
 
 	public function __construct(private \STU\Model\ShipTableInterface $ship): void {}
 	

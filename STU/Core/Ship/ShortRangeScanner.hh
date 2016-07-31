@@ -3,7 +3,7 @@ namespace STU\Core\Ship;
 
 use STU\Model\ShipTableInterface;
 
-final class ShortRangeScanner implements ShortRangeScannerInterface, ShipSystemInterface {
+final class ShortRangeScanner implements ShortRangeScannerInterface {
 
 	public function __construct(private ShipTableInterface $ship): void {
 	}

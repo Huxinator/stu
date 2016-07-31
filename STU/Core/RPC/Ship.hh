@@ -97,10 +97,15 @@ final class Ship extends Base {
 	public function toggleLongRangeScanner(int $ship_id): Type\Ship {
 		$ship = $this->getShip($ship_id);
 		if ($ship->getLrsActive() == 0) {
-			if ($ship->getEnergy() < 1) {
-				$this->fault('Es wird 1 Energie benötigt', self::ERROR_NOT_ENOUGH_POWER);
+			$scanner = $this->component_factory->createLongRangeScanner($ship);
+			$energy_consumtion = $scanner->getEnergyConsumption();
+			if ($ship->getEnergy() < $energy_consumtion) {
+				$this->fault(
+					sprintf('Es wird %d Energie benötigt', $energy_consumtion),
+					self::ERROR_NOT_ENOUGH_POWER
+				);
 			}
-			$ship->setEnergy($ship->getEnergy() - 1);
+			$ship->setEnergy($ship->getEnergy() - $energy_consumtion);
 			$ship->setLrsActive(1);
 		} else {
 			$ship->setLrsActive(0);
@@ -114,10 +119,15 @@ final class Ship extends Base {
 	public function toggleShortRangeScanner(int $ship_id): Type\Ship {
 		$ship = $this->getShip($ship_id);
 		if ($ship->getSrsActive() == 0) {
-			if ($ship->getEnergy() < 1) {
-				$this->fault('Es wird 1 Energie benötigt', self::ERROR_NOT_ENOUGH_POWER);
+			$scanner = $this->component_factory->createShortRangeScanner($ship);
+			$energy_consumtion = $scanner->getEnergyConsumption();
+			if ($ship->getEnergy() < $energy_consumtion) {
+				$this->fault(
+					sprintf('Es wird %d Energie benötigt', $energy_consumtion),
+					self::ERROR_NOT_ENOUGH_POWER
+				);
 			}
-			$ship->setEnergy($ship->getEnergy() - 1);
+			$ship->setEnergy($ship->getEnergy() - $energy_consumtion);
 			$ship->setSrsActive(1);
 		} else {
 			$ship->setSrsActive(0);

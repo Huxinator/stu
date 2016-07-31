@@ -1,5 +1,5 @@
 <?hh // strict
 namespace STU\Core\Ship;
 
-interface ShortRangeScannerInterface {
+interface ShortRangeScannerInterface extends ShipSystemInterface {
 }

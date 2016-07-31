@@ -18,4 +18,23 @@ class ShortRangeScannerTest extends \PHPUnit_Framework_TestCase {
 			$this->scanner->getEnergyConsumption()
 		);
 	}
+
+	public function testGetShipListReturnsVector() {
+		$cx = 666;
+		$cy = 42;
+		$map_instance_id = 123;
+		$result = Vector{};
+
+		$query = sprintf('map_instance_id = %d and cx = %d and cy = %d', $map_instance_id, $cx, $cy);
+
+		$this->ship->shouldReceive('getCx')->once()->andReturn($cx);
+		$this->ship->shouldReceive('getCy')->once()->andReturn($cy);
+		$this->ship->shouldReceive('getMapInstanceId')->once()->andReturn($map_instance_id);
+		$this->ship->shouldReceive('getObjectsBy')->with($query)->once()->andReturn($result);
+
+		$this->assertSame(
+			$result,
+			$this->scanner->getShipList()
+		);
+	}
 }

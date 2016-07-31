@@ -10,6 +10,7 @@ final class Ship extends Base {
 	const int ERROR_SHIELD_NOT_LOADED = 1;
 	const int ERROR_NOT_ENOUGH_POWER = 2;
 	const int ERROR_NOT_ALLOWED = 3;
+	const int ERROR_SYSTEM_NOT_ACTIVATED = 4;
 
 	public function __construct(\STU\DI\DIContainer $di, private \STU\Core\Ship\ComponentFactoryInterface $component_factory) {
 		parent::__construct($di);
@@ -136,5 +137,21 @@ final class Ship extends Base {
 		$ship->save();
 		
 		return new Type\Ship($ship);
+	}
+
+	public function getShiplistByShipPosition(int $ship_id): Vector<Type\ForeignShip> {
+		$ship = $this->getShip($ship_id);
+		if ($ship->getSrsActive() === 0) {
+			$this->fault('Kurzstreckensensoren nicht aktiviert', static::ERROR_SYSTEM_NOT_ACTIVATED);
+		}
+		$scanner = $this->component_factory->createShortRangeScanner($ship);
+
+		$result = Vector{};
+		foreach ($scanner->getShipList() as $foreign_ship) {
+			$result->add(
+				new Type\ForeignShip($foreign_ship)
+			);
+		}
+		return $result;
 	}
 }

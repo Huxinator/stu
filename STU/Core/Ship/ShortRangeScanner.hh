@@ -16,4 +16,18 @@ final class ShortRangeScanner implements ShortRangeScannerInterface {
 	public function getEnergyConsumption(): int {
 		return 1;
 	}
+
+	/**
+	 * @todo sorting?
+	 */
+	public function getShipList(): Vector<ShipTableInterface> {
+		return $this->ship->getObjectsBy(
+			sprintf(
+				'map_instance_id = %d and cx = %d and cy = %d',
+				$this->ship->getMapInstanceId(),
+				$this->ship->getCx(),
+				$this->ship->getCy()
+			)
+		);
+	}
 }

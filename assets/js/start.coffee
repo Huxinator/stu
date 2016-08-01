@@ -34,7 +34,8 @@ requirejs.config({
 		'backbone': '../lib/backbone-min',
 		'underscore': '../lib/underscore-min',
 		'handlebars': '../../../node_modules/handlebars/dist/handlebars.min',
-		'shipctl': 'shipctl'
+		'shipctl': 'shipctl',
+		'list': 'list'
 
 	}
 });

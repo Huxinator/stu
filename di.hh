@@ -40,3 +40,6 @@ $di_container['ship'] = $di_container->factory(function ($c): STU\Model\ShipTabl
 $di_container['map'] = $di_container->factory(function ($c): STU\Model\MapTableInterface {
 	return new STU\Model\MapTable($c['database']);
 });
+$di_container['ship_storage'] = $di_container->factory(function ($c): STU\Model\ShipStorageTableInterface {
+	return new STU\Model\ShipStorageTable($c['database']);
+});

@@ -1,7 +1,7 @@
 define(
 	['jquery', 'backbone', 'json', 'jquery.tpl', 'handlebars', 'shipctl'],
 	($, Backbone, json, tpl, Handlebars, Ship) ->
-		ShipMapView = Backbone.View.extend({
+		ShipSrsView = Backbone.View.extend({
 
 			initialize: ->
 				this.model.on('change', this.render, this);
@@ -32,7 +32,7 @@ define(
 
 
 
-		});
+		})
 
-		return ShipMapView;
-);
+		return ShipSrsView
+)

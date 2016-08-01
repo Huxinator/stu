@@ -20,6 +20,9 @@ define(['jquery', 'json', 'jquery.tpl'], ($) ->
 						requirejs(['ship/srs'], (view) =>
 							new view({model: ship}).render()
 						)
+						requirejs(['ship/storage'], (view) =>
+							new view({model: ship}).render()
+						)
 					})
 				)
 			)

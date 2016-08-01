@@ -1,0 +1,8 @@
+namespace=STU\Model
+class=ShipStorageTable
+table=stu_ship_storage
+key=id
+
+attribute=ship_id:int
+attribute=commodity_id:int
+attribute=amount:int

@@ -177,4 +177,16 @@ final class Ship extends Base {
 		}
 		return $result;
 	}
+
+	public function getStorage(int $ship_id): Type\ShipStorageInterface {
+		$ship = $this->getShip($ship_id);
+		$ship_storage = $this->getDIContainer()->ship_storage;
+
+		return new Type\ShipStorage(
+			$ship_storage->getObjectsBy(
+				sprintf('ship_id = %d', $ship->getId()),
+				'commodity_id ASC'
+			)
+		);
+	}
 }

@@ -189,4 +189,64 @@ final class Ship extends Base {
 			)
 		);
 	}
+
+	/**
+	 * @todo Move into own handler
+	 * @todo Add energy consumption
+	 */
+	public function beamToShip(int $ship_id, int $foreign_ship_id, array<int,\stdClass> $commodity_list): void {
+		$ship = $this->getShip($ship_id);
+		$foreign_ship = $this->getDIContainer()->ship->findObject('id='.$foreign_ship_id);
+
+		if ($foreign_ship->getMapInstanceId() != $ship->getMapInstanceId()) {
+			throw new \Exception('Wrong mapfield');
+		}
+		if ($foreign_ship->getCx() != $ship->getCx() || $foreign_ship->getCy() != $ship->getCy()) {
+			throw new \Exception('Wrong mapfield');
+		}
+		$ship_storage = $this->getDIContainer()->ship_storage->getObjectsBy(
+			sprintf('ship_id = %d', $ship->getId())
+		);
+
+		$commodities_to_beam = Map{};
+		foreach ($commodity_list as $entry) {
+			$vars = get_object_vars($entry);
+			if ($vars === null || !array_key_exists('commodity_id', $vars) || !array_key_exists('amount', $vars)) {
+				continue;
+			}
+			$commodities_to_beam[(int) $vars['commodity_id']] = $vars['amount'];
+		}
+		foreach ($ship_storage as $storage_item) {
+			$commodity_id = $storage_item->getCommodityId();
+			if (!$commodities_to_beam->contains($commodity_id)) {
+				continue;
+			}
+			$amount = min($storage_item->getAmount(), $commodities_to_beam->get($commodity_id));
+			try {
+				$foreign_storage_item = $this->getDIContainer()->ship_storage->findObject(
+					sprintf(
+						'ship_id = %d AND commodity_id = %d', $foreign_ship->getId(), $commodity_id
+					)
+				);
+			} catch (\Exception $e) {
+				$foreign_storage_item = $this->getDIContainer()->ship_storage;
+				$foreign_storage_item->setCommodityId($commodity_id);
+				$foreign_storage_item->setShipId($foreign_ship->getId());
+			}
+			$foreign_storage_item->setAmount(
+				$foreign_storage_item->getAmount() + $amount
+			);
+			$foreign_storage_item->save();
+
+			if ($storage_item->getAmount() == $amount) {
+				$storage_item->delete();
+			} else {
+				$storage_item->setAmount(
+					$storage_item->getAmount() - $amount
+				);
+				$storage_item->save();
+			}
+		}
+		return;
+	}
 }

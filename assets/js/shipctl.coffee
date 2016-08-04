@@ -9,5 +9,13 @@ define(['jquery', 'json', 'jquery.notify', 'jquery.tpl', 'backbone'], ($, json) 
 					hud.render(ship)
 				)
 			)
+		beamToShip: (ship, foreign_ship, commodities) ->
+			json.request('ship.beamToShip', [ship.get('id'), foreign_ship.id, commodities], (result) ->
+				console.log(result)
+			)
+		beamFromShip: (ship, foreign_ship, commodities) ->
+			json.request('ship.beamFromShip', [ship.get('id'), foreign_ship.id, commodities], (result) ->
+				console.log(result)
+			)
 	}
 )

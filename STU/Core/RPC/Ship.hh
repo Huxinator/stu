@@ -190,11 +190,31 @@ final class Ship extends Base {
 		);
 	}
 
+	public function getStorageFromForeignShip(int $ship_id, int $foreign_ship_id): Type\ShipStorageInterface {
+		$ship = $this->getShip($ship_id);
+		$foreign_ship = $this->getDIContainer()->ship->findObject('id='.$foreign_ship_id);
+
+		if ($foreign_ship->getMapInstanceId() != $ship->getMapInstanceId()) {
+			throw new \Exception('Wrong mapfield');
+		}
+		if ($foreign_ship->getCx() != $ship->getCx() || $foreign_ship->getCy() != $ship->getCy()) {
+			throw new \Exception('Wrong mapfield');
+		}
+
+		$ship_storage = $this->getDIContainer()->ship_storage;
+		return new Type\ShipStorage(
+			$ship_storage->getObjectsBy(
+				sprintf('ship_id = %d', $foreign_ship->getId()),
+				'commodity_id ASC'
+			)
+		);
+	}
+
 	/**
 	 * @todo Move into own handler
 	 * @todo Add energy consumption
 	 */
-	public function beamToShip(int $ship_id, int $foreign_ship_id, array<int,\stdClass> $commodity_list): void {
+	public function beamToShip(int $ship_id, int $foreign_ship_id, array<int,\stdClass> $commodity_list): array<int,int> {
 		$ship = $this->getShip($ship_id);
 		$foreign_ship = $this->getDIContainer()->ship->findObject('id='.$foreign_ship_id);
 
@@ -216,6 +236,7 @@ final class Ship extends Base {
 			}
 			$commodities_to_beam[(int) $vars['commodity_id']] = $vars['amount'];
 		}
+		$result = [];
 		foreach ($ship_storage as $storage_item) {
 			$commodity_id = $storage_item->getCommodityId();
 			if (!$commodities_to_beam->contains($commodity_id)) {
@@ -237,6 +258,7 @@ final class Ship extends Base {
 				$foreign_storage_item->getAmount() + $amount
 			);
 			$foreign_storage_item->save();
+			$result[$commodity_id] = $amount;
 
 			if ($storage_item->getAmount() == $amount) {
 				$storage_item->delete();
@@ -247,6 +269,64 @@ final class Ship extends Base {
 				$storage_item->save();
 			}
 		}
-		return;
+		return $result;
+	}
+
+	public function beamFromShip(int $ship_id, int $foreign_ship_id, array<int,\stdClass> $commodity_list): array<int,int> {
+		$ship = $this->getShip($ship_id);
+		$foreign_ship = $this->getDIContainer()->ship->findObject('id='.$foreign_ship_id);
+
+		if ($foreign_ship->getMapInstanceId() != $ship->getMapInstanceId()) {
+			throw new \Exception('Wrong mapfield');
+		}
+		if ($foreign_ship->getCx() != $ship->getCx() || $foreign_ship->getCy() != $ship->getCy()) {
+			throw new \Exception('Wrong mapfield');
+		}
+		$foreign_ship_storage = $this->getDIContainer()->ship_storage->getObjectsBy(
+			sprintf('ship_id = %d', $foreign_ship->getId())
+		);
+
+		$commodities_to_beam = Map{};
+		foreach ($commodity_list as $entry) {
+			$vars = get_object_vars($entry);
+			if ($vars === null || !array_key_exists('commodity_id', $vars) || !array_key_exists('amount', $vars)) {
+				continue;
+			}
+			$commodities_to_beam[(int) $vars['commodity_id']] = $vars['amount'];
+		}
+		$result = [];
+		foreach ($foreign_ship_storage as $foreign_storage_item) {
+			$commodity_id = $foreign_storage_item->getCommodityId();
+			if (!$commodities_to_beam->contains($commodity_id)) {
+				continue;
+			}
+			$amount = min($foreign_storage_item->getAmount(), $commodities_to_beam->get($commodity_id));
+			try {
+				$storage_item = $this->getDIContainer()->ship_storage->findObject(
+					sprintf(
+						'ship_id = %d AND commodity_id = %d', $ship->getId(), $commodity_id
+					)
+				);
+			} catch (\Exception $e) {
+				$storage_item = $this->getDIContainer()->ship_storage;
+				$storage_item->setCommodityId($commodity_id);
+				$storage_item->setShipId($ship->getId());
+			}
+			$storage_item->setAmount(
+				$storage_item->getAmount() + $amount
+			);
+			$storage_item->save();
+			$result[$commodity_id] = $amount;
+
+			if ($foreign_storage_item->getAmount() == $amount) {
+				$foreign_storage_item->delete();
+			} else {
+				$foreign_storage_item->setAmount(
+					$foreign_storage_item->getAmount() - $amount
+				);
+				$foreign_storage_item->save();
+			}
+		}
+		return $result;
 	}
 }

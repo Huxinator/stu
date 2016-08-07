@@ -19,7 +19,6 @@ class ShipTest extends \PHPUnit_Framework_TestCase {
 		$type_id = 1;
 		$cx = 666;
 		$cy = 999;
-		$sector = sprintf('%d/%d', $cx, $cy);
 		$energy = 111;
 		$shield_points = 222;
 		$shield_active = 1;
@@ -29,8 +28,8 @@ class ShipTest extends \PHPUnit_Framework_TestCase {
 		$this->ship->shouldReceive('getId')->once()->andReturn($id);
 		$this->ship->shouldReceive('getName')->once()->andReturn($name);
 		$this->ship->shouldReceive('getHull')->once()->andReturn($hull_points);
-		$this->ship->shouldReceive('getCx')->twice()->andReturn($cx);
-		$this->ship->shouldReceive('getCy')->twice()->andReturn($cy);
+		$this->ship->shouldReceive('getCx')->once()->andReturn($cx);
+		$this->ship->shouldReceive('getCy')->once()->andReturn($cy);
 		$this->ship->shouldReceive('getEnergy')->once()->andReturn($energy);
 		$this->ship->shouldReceive('getShields')->once()->andReturn($shield_points);
 		$this->ship->shouldReceive('getShieldActive')->once()->andReturn($shield_active);
@@ -45,7 +44,6 @@ class ShipTest extends \PHPUnit_Framework_TestCase {
 				'type_id' => $type_id,
 				'cx' => $cx,
 				'cy' => $cy,
-				'sector' => $sector,
 				'energy' => $energy,
 				'shield' => $shield_points,
 				'shield_active' => $shield_active,

@@ -9,7 +9,6 @@ final class Ship implements \JsonSerializable {
 	}
 	
 	public function jsonSerialize(): array<string, mixed> {
-		// `sector` is deprecated, the client should handle this
 		return [
 			'id' => $this->ship->getId(),
 			'name' => $this->ship->getName(),
@@ -17,7 +16,6 @@ final class Ship implements \JsonSerializable {
 			'type_id' => 1,
 			'cx' => $this->ship->getCx(),
 			'cy' => $this->ship->getCy(),
-			'sector' => sprintf('%d/%d', $this->ship->getCx(), $this->ship->getCy()),
 			'energy' => $this->ship->getEnergy(),
 			'shield' => $this->ship->getShields(),
 			'shield_active' => $this->ship->getShieldActive(),

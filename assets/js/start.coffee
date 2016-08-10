@@ -112,4 +112,8 @@ loadLinks = () ->
 	$('#nav_ship_link').bind 'click', ->
 		requirejs(['shiplist/list'], (shiplistapp) ->
 			shiplistapp.render();
-		);
+		)
+	$('#nav_planet_link').bind 'click', ->
+		requirejs(['planetlist/list'], (planetlistapp) ->
+			planetlistapp.render()
+		)

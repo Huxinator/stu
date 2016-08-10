@@ -32,6 +32,11 @@ $server->registerFactory(
 );
 $server->registerFactory(
 	function() use ($di_container) {
+		return new \STU\Core\RPC\Planetlist($di_container);
+	}, 'planetlist'
+);
+$server->registerFactory(
+	function() use ($di_container) {
 		return new \STU\Core\RPC\Ship($di_container, $di_container->ship_component_factory);
 	}, 'ship'
 );

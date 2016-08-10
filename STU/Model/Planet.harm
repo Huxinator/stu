@@ -1,0 +1,12 @@
+namespace=STU\Model
+class=PlanetTable
+table=stu_planet
+key=id
+
+attribute=name:text
+attribute=energy:int
+attribute=energy_max:int
+attribute=user_id:int
+attribute=cx:int
+attribute=cy:int
+attribute=map_instance_id:int

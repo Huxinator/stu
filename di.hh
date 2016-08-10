@@ -29,6 +29,16 @@ $di_container['map_component_factory'] = function ($c): STU\Core\Map\ComponentFa
 	return new STU\Core\Map\ComponentFactory($c->map);
 };
 
+/**
+$di_container['planet_component_factory'] = function ($c): STU\Core\Planet\ComponentFactoryInterface {
+	return new STU\Core\Planet\ComponentFactory($c->map);
+};
+ */
+
+$di_container['core_rpc_handler_planet_handler_factory'] = function ($c): STU\Core\RPC\Handler\PlanetHandlerFactory {
+	return new STU\Core\RPC\Handler\PlanetHandlerFactory($c->planet_table);
+};
+
 // Model
 
 $di_container['user'] = $di_container->factory(function ($c): STU\Model\UserTableInterface {
@@ -39,6 +49,9 @@ $di_container['ship'] = $di_container->factory(function ($c): STU\Model\ShipTabl
 });
 $di_container['map'] = $di_container->factory(function ($c): STU\Model\MapTableInterface {
 	return new STU\Model\MapTable($c['database']);
+});
+$di_container['planet_table'] = $di_container->factory(function ($c): STU\Model\PlanetTableInterface {
+	return new STU\Model\PlanetTable($c['database']);
 });
 $di_container['ship_storage'] = $di_container->factory(function ($c): STU\Model\ShipStorageTableInterface {
 	return new STU\Model\ShipStorageTable($c['database']);
